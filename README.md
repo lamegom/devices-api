@@ -101,3 +101,11 @@ To run locally:
 | Parameter   | Type       | Description                                   |
 | :---------- | :--------- | :------------------------------------------ |
 | `id`      | `long` | **Required**. id of device to be deleted |
+
+
+## Screenshot
+
+http://localhost:8080/swagger-ui/index.html
+
+![DDD](https://github.com/lamegom/devices-api/blob/master/images/swaggerPNG.PNG?raw=true)
+
