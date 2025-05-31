@@ -27,10 +27,10 @@ services:
     networks:
       - springboot-mysql-network
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "mysqldb"]
       retries: 10
       interval: 3s
-      timeout: 30s
+      timeout: 50s
 volumes:
   mysql-data:
 networks:
