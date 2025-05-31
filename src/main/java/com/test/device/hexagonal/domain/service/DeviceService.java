@@ -36,13 +36,11 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 		Device deviceValidated = deviceMapper.toDevice(devicePersistenceAdapter.findById(device.getId()).orElse(null));
 		device.setCreationTime(deviceValidated.getCreationTime());
 		
-		if(device.getState().equals(StateEnum.IN_USE)) {
+		if(deviceValidated.getState().equals(StateEnum.IN_USE)) {
 			device.setName(deviceValidated.getName());
 			device.setBrand(deviceValidated.getBrand());
-		} else {
-			deviceValidated = device;
 		}
-		DeviceEntity entity =  devicePersistenceAdapter.save(deviceMapper.toEntity(deviceValidated));
+		DeviceEntity entity =  devicePersistenceAdapter.save(deviceMapper.toEntity(device));
 		return deviceMapper.toDevice(entity);
 	}
 
