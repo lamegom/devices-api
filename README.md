@@ -11,7 +11,7 @@ The API has a DDD (Domain-Design-Driven) with a Hexagonal architeture. The purpo
 
 ![DDD](https://github.com/lamegom/devices-api/blob/master/images/layers.png?raw=true)
 
-The application were done following the SOLID principles and some GoF design patterns.
+The application was done following the SOLID principles and some GoF design patterns.
 
 ![DDD](https://github.com/lamegom/devices-api/blob/master/images/SOLID.png?raw=true)
 
