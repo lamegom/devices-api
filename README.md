@@ -107,5 +107,5 @@ To run locally:
 
 http://localhost:8080/swagger-ui/index.html
 
-![DDD](https://github.com/lamegom/devices-api/blob/master/images/SOLID.png?raw=true)
+![DDD]([https://github.com/lamegom/devices-api/blob/master/images/SOLID.png?raw=true](https://github.com/lamegom/devices-api/blob/master/images/swaggerPNG.PNG?raw=true))
 
