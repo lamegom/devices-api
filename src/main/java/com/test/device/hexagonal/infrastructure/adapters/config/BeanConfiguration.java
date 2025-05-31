@@ -5,9 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.test.device.hexagonal.domain.service.DeviceService;
 import com.test.device.hexagonal.infrastructure.adapters.output.persistence.DevicePersistenceAdapter;
-import com.test.device.hexagonal.infrastructure.adapters.output.persistence.mapper.DeviceMapper;
-
-import springfox.documentation.swagger2.mappers.ModelMapper;
 
 /**
  * Configuracion BEANS

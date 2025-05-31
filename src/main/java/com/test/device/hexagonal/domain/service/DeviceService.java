@@ -1,6 +1,7 @@
 package com.test.device.hexagonal.domain.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -33,24 +34,39 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 
 	@Override
 	public Device updateDevice(Device device) {
-		Device deviceValidated = deviceMapper.toDevice(devicePersistenceAdapter.findById(device.getId()).orElse(null));
-		device.setCreationTime(deviceValidated.getCreationTime());
-		
-		if(deviceValidated.getState().equals(StateEnum.IN_USE)) {
-			device.setName(deviceValidated.getName());
-			device.setBrand(deviceValidated.getBrand());
-		}
-		DeviceEntity entity =  devicePersistenceAdapter.save(deviceMapper.toEntity(device));
-		return deviceMapper.toDevice(entity);
+		try {
+		     Device deviceValidated = deviceMapper.toDevice(devicePersistenceAdapter.findById(device.getId()).orElse(null));
+			device.setCreationTime(deviceValidated.getCreationTime());
+			
+			if(deviceValidated.getState().equals(StateEnum.IN_USE)) {
+				device.setName(deviceValidated.getName());
+				device.setBrand(deviceValidated.getBrand());
+				//device.setState(deviceValidated.getState());
+			}
+			DeviceEntity entity =  devicePersistenceAdapter.save(deviceMapper.toEntity(device));
+			return deviceMapper.toDevice(entity);
+	} catch (Exception n) {
+		 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Device not found with id: " + device.getId());
+
+	}
 	}
 
 	@Override
 	public void deleteDeviceById(Long id) {
-		Optional<DeviceEntity> device = devicePersistenceAdapter.findById(id);
-		 if(device.get().getState().equals(StateEnum.IN_USE)) {
-			 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete device with state IN_USE");
-		 }
-		devicePersistenceAdapter.delete(device != null?device.get():null);
+		Optional<DeviceEntity> device = null;
+		
+		try {
+			device = devicePersistenceAdapter.findById(id);
+
+			 if(device.get().getState().equals(StateEnum.IN_USE)) {
+				 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete device with state IN_USE");
+			 }
+			devicePersistenceAdapter.delete(device != null?device.get():null);
+		
+		} catch (Exception n) {
+			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Device not found with id: " + id);
+
+		}
 
 		
 	}
@@ -62,18 +78,29 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 
 	@Override
 	public Device getDeviceById(Long id) {
-		return deviceMapper.toDevice(devicePersistenceAdapter.findById(id).orElse(null));
+		Optional<DeviceEntity> device = null;
+		try {
+			device = devicePersistenceAdapter.findById(id);
+			return deviceMapper.toDevice(device.get());
+		} catch (NoSuchElementException n) {
+			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Device not found with id: " + id);
+
+		}
 
 	}
 
 	@Override
 	public List<Device> getDeviceByName(String name) {
-		return deviceMapper.listDeviceEntityToListDevice(devicePersistenceAdapter.findByName(name));
+		List<DeviceEntity> devices = devicePersistenceAdapter.findByName(name);
+
+		return deviceMapper.listDeviceEntityToListDevice(devices);
 	}
 
 	@Override
 	public List<Device> getDeviceByBrand(String brand) {
-		return deviceMapper.listDeviceEntityToListDevice(devicePersistenceAdapter.findByBrand(brand));
+		List<DeviceEntity> devices = devicePersistenceAdapter.findByBrand(brand);
+
+		return deviceMapper.listDeviceEntityToListDevice(devices);
 	}
 
 

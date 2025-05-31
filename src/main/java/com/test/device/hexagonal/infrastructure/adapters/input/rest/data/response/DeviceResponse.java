@@ -1,8 +1,6 @@
 package com.test.device.hexagonal.infrastructure.adapters.input.rest.data.response;
 
 import java.util.Date;
-import java.util.List;
-
 import com.test.device.hexagonal.domain.model.enums.StateEnum;
 
 import lombok.AllArgsConstructor;
