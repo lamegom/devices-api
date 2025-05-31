@@ -127,7 +127,7 @@ public class DeviceRestAdapter {
     	    description = "Device to create", required = true,
     	    content = @Content(mediaType = "application/json",
     	      schema = @Schema(implementation = Device.class),
-    	      examples = @ExampleObject(value = "{ \"name\": \"New Device\", \"brand\": \"Brand Name\", \"state\": \"AVAILABLE\", \"creationTime\": \"2025-05-31T03:36:37.085\" }"))) @RequestBody DeviceRequest deviceRequest){
+    	      examples = @ExampleObject(value = "{ \"name\": \"New Device\", \"brand\": \"Brand Name\", \"state\": \"AVAILABLE\", \"creationTime\": \"28/05/2025 03:36:37\" }"))) @RequestBody DeviceRequest deviceRequest){
         Device device = mapper.map(deviceRequest,  Device.class);
         Device deviceSaved = createDeviceUseCase.createDevice(device);
     	DeviceResponse deviceResponse = mapper.map(deviceSaved, DeviceResponse.class);
@@ -149,7 +149,7 @@ public class DeviceRestAdapter {
     	    description = "Device to update", required = true,
     	    content = @Content(mediaType = "application/json",
     	      schema = @Schema(implementation = Device.class),
-    	      examples = @ExampleObject(value = "{ \"id\": 1, \"name\": \"Existing Device\", \"brand\": \"Brand Name\", \"state\": \"AVAILABLE\", \"creationTime\": \"2025-05-31T03:36:37.085\" }"))) @RequestBody DeviceRequest deviceRequest){
+    	      examples = @ExampleObject(value = "{ \"id\": 1, \"name\": \"Existing Device\", \"brand\": \"Brand Name\", \"state\": \"AVAILABLE\", \"creationTime\": \"28/05/2025 03:36:37\" }"))) @RequestBody DeviceRequest deviceRequest){
         Device device = mapper.map(deviceRequest,  Device.class);
         Device deviceSaved = updateDeviceUseCase.updateDevice(device);
     	DeviceResponse deviceResponse = mapper.map(deviceSaved, DeviceResponse.class);

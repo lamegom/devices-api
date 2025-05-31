@@ -28,6 +28,7 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 
 	@Override
 	public Device createDevice(Device device) {
+
 		DeviceEntity entity =  devicePersistenceAdapter.save(deviceMapper.toEntity(device));
 		return deviceMapper.toDevice(entity);
 	}

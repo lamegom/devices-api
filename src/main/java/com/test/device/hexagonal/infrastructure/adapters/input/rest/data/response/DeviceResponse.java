@@ -1,6 +1,8 @@
 package com.test.device.hexagonal.infrastructure.adapters.input.rest.data.response;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.test.device.hexagonal.domain.model.enums.StateEnum;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class DeviceResponse {
     
     private StateEnum state;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", locale = "pt-BR", timezone = "UTC")
     private Date creationTime;
 
    

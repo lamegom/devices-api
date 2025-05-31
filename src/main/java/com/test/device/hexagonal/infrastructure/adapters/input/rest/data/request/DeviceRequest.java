@@ -2,7 +2,11 @@ package com.test.device.hexagonal.infrastructure.adapters.input.rest.data.reques
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.test.device.hexagonal.domain.model.enums.StateEnum;
+import com.test.device.hexagonal.infrastructure.adapters.output.persistence.entity.CustomJsonDateDeserializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +29,7 @@ public class DeviceRequest {
     
     private StateEnum state;
     
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Date creationTime;
     
 }

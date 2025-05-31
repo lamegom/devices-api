@@ -3,6 +3,8 @@ package com.test.device.hexagonal.infrastructure.adapters.output.persistence.ent
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.test.device.hexagonal.domain.model.enums.StateEnum;
 
 import jakarta.persistence.Column;
