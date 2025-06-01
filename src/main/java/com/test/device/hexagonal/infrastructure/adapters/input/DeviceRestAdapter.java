@@ -32,6 +32,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -127,7 +128,7 @@ public class DeviceRestAdapter {
     	    description = "Device to create", required = true,
     	    content = @Content(mediaType = "application/json",
     	      schema = @Schema(implementation = Device.class),
-    	      examples = @ExampleObject(value = "{ \"name\": \"New Device\", \"brand\": \"Brand Name\", \"state\": \"AVAILABLE\", \"creationTime\": \"28/05/2025 03:36:37\" }"))) @RequestBody DeviceRequest deviceRequest){
+    	      examples = @ExampleObject(value = "{ \"name\": \"New Device\", \"brand\": \"Brand Name\", \"state\": \"AVAILABLE\", \"creationTime\": \"28/05/2025 03:36:37\" }"))) @Valid  @RequestBody DeviceRequest deviceRequest){
         Device device = mapper.map(deviceRequest,  Device.class);
         Device deviceSaved = createDeviceUseCase.createDevice(device);
     	DeviceResponse deviceResponse = mapper.map(deviceSaved, DeviceResponse.class);
