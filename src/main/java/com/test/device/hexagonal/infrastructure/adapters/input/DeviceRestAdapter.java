@@ -1,6 +1,8 @@
 package com.test.device.hexagonal.infrastructure.adapters.input;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -129,7 +131,10 @@ public class DeviceRestAdapter {
     	    content = @Content(mediaType = "application/json",
     	      schema = @Schema(implementation = Device.class),
     	      examples = @ExampleObject(value = "{ \"name\": \"New Device\", \"brand\": \"Brand Name\", \"state\": \"AVAILABLE\", \"creationTime\": \"28/05/2025 03:36:37\" }"))) @Valid  @RequestBody DeviceRequest deviceRequest){
-        Device device = mapper.map(deviceRequest,  Device.class);
+        if(Objects.isNull(deviceRequest.getCreationTime())) {
+        	deviceRequest.setCreationTime(new Date());
+        }
+    	Device device = mapper.map(deviceRequest,  Device.class);
         Device deviceSaved = createDeviceUseCase.createDevice(device);
     	DeviceResponse deviceResponse = mapper.map(deviceSaved, DeviceResponse.class);
 

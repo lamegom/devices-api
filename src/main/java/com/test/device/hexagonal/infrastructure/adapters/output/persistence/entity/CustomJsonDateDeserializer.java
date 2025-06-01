@@ -21,8 +21,7 @@ public class CustomJsonDateDeserializer extends JsonDeserializer<Date>
 
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dateStr = jsonparser.getText();
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-        
+        formatter.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
         try {
             return formatter.parse(dateStr);
         } catch (ParseException e) {
