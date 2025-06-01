@@ -64,7 +64,7 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 			 }
 			devicePersistenceAdapter.delete(device != null?device.get():null);
 		
-		} catch (Exception n) {
+		} catch (NoSuchElementException n) {
 			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Device not found with id: " + id);
 
 		}

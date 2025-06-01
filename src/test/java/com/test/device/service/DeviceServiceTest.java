@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -12,7 +13,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.test.device.hexagonal.DeviceApplication;
 import com.test.device.hexagonal.domain.model.Device;
@@ -105,9 +106,9 @@ public class DeviceServiceTest {
 	
 	@Test
 	void deleteDeviceById_throwsExceptionIfIDNotFound() {
-	    assertThatExceptionOfType(NoSuchElementException.class)
+	    assertThatExceptionOfType(ResponseStatusException.class)
 	        .isThrownBy(() -> deviceService.deleteDeviceById(1L))
-	        .withMessage("No value present");
+	        .withMessage("404 NOT_FOUND \"Device not found with id: 1\"");
 	}
 	
 	@Test
@@ -137,7 +138,10 @@ public class DeviceServiceTest {
 		
 		
 		//act
-		deviceService.deleteDeviceById(1L);
+        assertThrows(ResponseStatusException.class, () -> {
+        	deviceService.deleteDeviceById(1L);
+        });
+		
 		//assert
 		assertNotNull(deviceRepository.findById(1L));
 		verify(deviceRepository, times(2)).findById(1L);
