@@ -38,7 +38,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/v1/devices")
+@RequestMapping("/api/v1/devices")
 @RequiredArgsConstructor
 public class DeviceRestAdapter {
     
