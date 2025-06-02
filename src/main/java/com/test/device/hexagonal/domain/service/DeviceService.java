@@ -74,7 +74,12 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 
 	@Override
 	public List<Device> getAllDevices() {
-		return deviceMapper.listDeviceEntityToListDevice(devicePersistenceAdapter.findAll());
+		List<DeviceEntity> devices = devicePersistenceAdapter.findAll();
+		
+		if(devices.size() < 1) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Devices not found  ");
+		}
+		return deviceMapper.listDeviceEntityToListDevice(devices);
 	}
 
 	@Override
@@ -93,6 +98,10 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 	@Override
 	public List<Device> getDeviceByName(String name) {
 		List<DeviceEntity> devices = devicePersistenceAdapter.findByName(name);
+		if(devices.size() < 1) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Devices not found with name: " + name);
+		}
+
 
 		return deviceMapper.listDeviceEntityToListDevice(devices);
 	}
@@ -100,7 +109,9 @@ public class DeviceService implements CreateDeviceUseCase, UpdateDeviceUseCase, 
 	@Override
 	public List<Device> getDeviceByBrand(String brand) {
 		List<DeviceEntity> devices = devicePersistenceAdapter.findByBrand(brand);
-
+		if(devices.size() < 1) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Devices not found with brand: " + brand);
+		}
 		return deviceMapper.listDeviceEntityToListDevice(devices);
 	}
 
